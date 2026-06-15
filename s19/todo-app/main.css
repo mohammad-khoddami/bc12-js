@@ -1,0 +1,125 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(
+        90deg,
+        rgba(42, 123, 155, 1) 0%,
+        rgba(87, 199, 133, 1) 50%,
+        rgba(83, 219, 237, 1) 100%
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapper {
+    background-color: white;
+    width: fit-content;
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.task-input {
+    width: 300px;
+    height: 50px;
+    position: relative;
+
+    img {
+        position: absolute;
+        width: 25px;
+        top: calc(50% - 12.5px);
+        left: 15px;
+    }
+
+    input {
+        width: 100%;
+        height: 100%;
+        outline: none;
+        border: 1px solid #999;
+        border-radius: 8px;
+        padding: 0 12px 0 50px;
+        font-size: 14px;
+    }
+
+    input:focus {
+        border: 2px solid #3c87ff;
+    }
+}
+
+.task-box {
+    .task {
+        list-style: none;
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+    }
+    .task:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+    input[type="checkbox"] {
+        margin-top: 5px;
+        accent-color: #3c87ff;
+    }
+    p.checked {
+        text-decoration: line-through;
+    }
+}
+
+.controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+
+    .filters {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        span {
+            color: #444444;
+            cursor: pointer;
+        }
+    }
+
+    .clear-btn {
+        border: none;
+        opacity: 0.6;
+        outline: none;
+        color: #fff;
+        cursor: pointer;
+        font-size: 13px;
+        padding: 4px 13px;
+        border-radius: 4px;
+        letter-spacing: 0.3px;
+        pointer-events: none;
+        transition: transform 0.25s ease;
+        background: linear-gradient(135deg, #f21515 0%, #ff0628 100%);
+    }
+
+    .clear-btn.active {
+        opacity: 0.9;
+        pointer-events: auto;
+    }
+    .clear-btn:active {
+        transform: scale(0.93);
+    }
+}
