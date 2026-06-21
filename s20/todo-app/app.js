@@ -1,6 +1,7 @@
 var taskList = [];
 var taskListTag = document.getElementById("task-list-tag");
 var taskInputTag = document.getElementById("task-input-tag");
+var clearBtnTag = document.getElementById("clear-btn");
 
 var isEdit = false;
 var editId = null;
@@ -15,7 +16,7 @@ function addTask(e) {
                 status: "pending",
             });
         } else {
-            taskList[editId].name = taskInputTag.value;
+            taskList[editId].name = inputValue;
             isEdit = false;
             editId = null;
         }
@@ -25,11 +26,16 @@ function addTask(e) {
     printTask();
 }
 
-function printTask() {
+function printTask(filter = "all") {
     var taskItemTag = "";
+
+    clearBtnStyle();
+    filterStyle(filter);
+
     for (var i = 0; i < taskList.length; i++) {
-        var complete = taskList[i].status === "complete" ? "checked" : "";
-        taskItemTag += `<li class="task">
+        if (filter === taskList[i].status || filter === "all") {
+            var complete = taskList[i].status === "complete" ? "checked" : "";
+            taskItemTag += `<li class="task">
             <label for="task-${i}">
                 <input type="checkbox" id="task-${i}" onclick="toggleTaskStatus(${i})" ${complete} />
                 <p class="${complete}">${taskList[i].name}</p>      
@@ -39,6 +45,7 @@ function printTask() {
                 <button onclick="removeTask(${i})">remove</button>
             </div>  
         </li>`;
+        }
     }
 
     taskListTag.innerHTML = taskItemTag;
@@ -46,25 +53,41 @@ function printTask() {
     console.log(taskList);
 }
 
-function toggleTaskStatus(id) {
-    for (var i = 0; i < taskList.length; i++) {
-        if (id === i) {
-            taskList[i].status =
-                taskList[i].status === "pending" ? "complete" : "pending";
+function clearBtn(e) {
+    taskList = [];
+    printTask();
+}
+
+function filterStyle(filter) {
+    var filterBtn = document.getElementById("filters").children;
+    for (var i = 0; i < filterBtn.length; i++) {
+        if (filterBtn[i].id === filter) {
+            filterBtn[i].classList.add("active");
+        } else {
+            filterBtn[i].classList.remove("active");
         }
     }
+}
+
+function clearBtnStyle() {
+    if (taskList.length > 0) {
+        clearBtnTag.classList.add("active");
+    } else {
+        clearBtnTag.classList.remove("active");
+    }
+}
+
+function toggleTaskStatus(id) {
+    taskList[id].status =
+        taskList[id].status === "pending" ? "complete" : "pending";
     printTask();
 }
 
 function editTask(id) {
-    for (var i = 0; i < taskList.length; i++) {
-        if (id === i) {
-            taskInputTag.value = taskList[i].name;
-            taskInputTag.focus();
-            isEdit = true;
-            editId = id;
-        }
-    }
+    taskInputTag.value = taskList[id].name;
+    taskInputTag.focus();
+    isEdit = true;
+    editId = id;
 }
 
 function removeTask(id) {
