@@ -1,3 +1,4 @@
+// var taskList = JSON.parse(localStorage.getItem("taskList")) || [];
 var taskList = [];
 var taskListTag = document.getElementById("task-list-tag");
 var taskInputTag = document.getElementById("task-input-tag");
@@ -23,6 +24,7 @@ function addTask(e) {
         e.target.value = "";
     }
 
+    updateLocalStorage();
     printTask();
 }
 
@@ -55,6 +57,7 @@ function printTask(filter = "all") {
 
 function clearBtn(e) {
     taskList = [];
+    updateLocalStorage();
     printTask();
 }
 
@@ -80,6 +83,7 @@ function clearBtnStyle() {
 function toggleTaskStatus(id) {
     taskList[id].status =
         taskList[id].status === "pending" ? "complete" : "pending";
+    updateLocalStorage();
     printTask();
 }
 
@@ -99,5 +103,15 @@ function removeTask(id) {
     }
     taskList = newList;
 
+    updateLocalStorage();
+    printTask();
+}
+
+function updateLocalStorage() {
+    localStorage.setItem("taskList", JSON.stringify(taskList));
+}
+
+function load() {
+    taskList = JSON.parse(localStorage.getItem("taskList"));
     printTask();
 }
