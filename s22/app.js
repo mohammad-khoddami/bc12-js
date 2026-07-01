@@ -99,11 +99,12 @@ console.log(
         if (a % 2 === 0) return a;
     }),
 );
-console.log(
-    myFilter(array, (a) => {
-        if (a % 2 !== 0) return a;
-    }),
-);
+
+const filterOdd = (a) => {
+    if (a % 2 !== 0) return a;
+};
+
+console.log(myFilter(array, filterOdd));
 
 function myFilter(array, callback) {
     let newArray = [];
